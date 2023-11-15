@@ -19,7 +19,6 @@ class AppRoutes {
   static const LOGINSCREEN = "/loginScreen";
   static const SETTINGSCREEN = "/settingScfreen";
 
-
   static final routes = [
     GetPage(name: SPLASH, page: () => const SplashScreen()),
     GetPage(name: LANGUAGE, page: () => const LanguageScreen()),
