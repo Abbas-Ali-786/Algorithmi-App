@@ -1,2 +1,0 @@
-# Algorithmi-App
- 

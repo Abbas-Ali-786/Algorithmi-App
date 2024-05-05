@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "506160470849",
+    "project_id": "algo-ef8da",
+    "storage_bucket": "algo-ef8da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506160470849:android:b762246fd6ba5ad16edfc0",
+        "android_client_info": {
+          "package_name": "com.example.algorthimi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEjnR-TWpXbwJru93gCKhWSW-1qSBBABY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
