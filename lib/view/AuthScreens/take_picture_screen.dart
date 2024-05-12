@@ -95,8 +95,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
 
         print("image size ${compressedImage.length}");
 
-        var request = http.MultipartRequest('POST', Uri.parse('https://algo-app-api.ytech.systems/upload'),
-        );
+        var request = http.MultipartRequest('POST', Uri.parse('https://algo-app-api.ytech.systems/upload'),);
 
         request.fields['image'] = 'image';
         request.files.add(http.MultipartFile.fromBytes('image', compressedImage, filename: '${DateTime.now()}.jpg'));
