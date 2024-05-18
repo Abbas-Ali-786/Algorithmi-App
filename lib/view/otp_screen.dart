@@ -16,8 +16,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../utils/color_data.dart';
 
 
-
-
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
 
