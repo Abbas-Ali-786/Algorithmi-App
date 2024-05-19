@@ -39,6 +39,7 @@ class _FootStepCounterState extends State<FootStepCounter> {
   // Assuming an average stride length of 0.75 meters
   final double averageStrideLengthMeters = 0.75;
 
+  
   @override
   void initState() {
     super.initState();
