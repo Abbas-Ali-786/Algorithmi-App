@@ -8,7 +8,6 @@ import 'controller/geo_location_controller.dart';
 import 'view/languages.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -24,7 +23,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   LocationController locationController =
-  Get.put(LocationController(), tag: 'locationController');
+      Get.put(LocationController(), tag: 'locationController');
 
   @override
   void initState() {
@@ -35,7 +34,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> _requestPedometerPermission() async {
     final PermissionStatus status = await Permission.activityRecognition.status;
     if (!status.isGranted) {
-      final PermissionStatus result = await Permission.activityRecognition.request();
+      final PermissionStatus result =
+          await Permission.activityRecognition.request();
       if (!result.isGranted) {
         // Handle denial of permission
         print('Permission not granted');

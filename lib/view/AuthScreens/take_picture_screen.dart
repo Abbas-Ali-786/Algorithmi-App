@@ -17,7 +17,6 @@ import 'package:http/http.dart' as http;
 
 import 'Widgets/scan_id_shop_owner_screen.dart';
 
-
 class TakePictureScreen extends StatefulWidget {
   TakePictureScreen({Key? key, this.isSelectSignUp, this.userType})
       : super(key: key);
@@ -34,8 +33,10 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   File? takePhoto;
 
   Future captureImage() async {
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.camera,
-      preferredCameraDevice: CameraDevice.front, requestFullMetadata: true,
+    final pickedFile = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.front,
+      requestFullMetadata: true,
     );
     setState(() {
       if (pickedFile != null) {
@@ -74,7 +75,6 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     Get.back();
   }
 
-
   Future<void> _takeScreenshot(BuildContext context) async {
     try {
       setState(() {
@@ -84,21 +84,24 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
       if (takePhoto != null) {
         final File imageFile = takePhoto!;
 
-        List<int> compressedImage = (await FlutterImageCompress.compressWithFile(
+        List<int> compressedImage =
+            (await FlutterImageCompress.compressWithFile(
           imageFile.path,
           minHeight: 1024,
           minWidth: 1024,
           quality: 100,
-        )
-        ) as List<int>;
-
+        )) as List<int>;
 
         print("image size ${compressedImage.length}");
 
-        var request = http.MultipartRequest('POST', Uri.parse('https://algo-app-api.ytech.systems/upload'),);
+        var request = http.MultipartRequest(
+          'POST',
+          Uri.parse('https://algo-app-api.ytech.systems/upload'),
+        );
 
         request.fields['image'] = 'image';
-        request.files.add(http.MultipartFile.fromBytes('image', compressedImage, filename: '${DateTime.now()}.jpg'));
+        request.files.add(http.MultipartFile.fromBytes('image', compressedImage,
+            filename: '${DateTime.now()}.jpg'));
 
         var response = await request.send();
 
@@ -144,7 +147,6 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -167,7 +169,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
                 decoration: BoxDecoration(
                     color: accentColor,
                     borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(4.h))),
+                        BorderRadius.only(bottomRight: Radius.circular(4.h))),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -211,310 +213,309 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
                       children: [
                         widget.isSelectSignUp == 2 || widget.isSelectSignUp == 3
                             ? Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 3.h),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: getCustomTextW6S15(
-                                text:
-                                'Take Selfie for starting Questionnaire'
-                                    .tr,
+                                padding: EdgeInsets.symmetric(horizontal: 3.h),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: getCustomTextW6S15(
+                                      text:
+                                          'Take Selfie for starting Questionnaire'
+                                              .tr,
+                                      color: textBlackColor,
+                                      textAlign: TextAlign.center),
+                                ),
+                              )
+                            : getCustomTextW6S15(
+                                text: '',
                                 color: textBlackColor,
                                 textAlign: TextAlign.center),
-                          ),
-                        )
-                            : getCustomTextW6S15(
-                            text: '',
-                            color: textBlackColor,
-                            textAlign: TextAlign.center),
                         takePhoto == null
                             ? SizedBox(
-                          height: 45.h,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  getSvgImage('back_logo.svg',
-                                      height: 25.h),
-                                  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 9.h),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          showModalBottomSheet<void>(
-                                            context: context,
-                                            elevation: 5,
-                                            builder:
-                                                (BuildContext context) {
-                                              return Container(
-                                                height: widget.isSelectSignUp ==
-                                                    2 ||
-                                                    widget.isSelectSignUp ==
-                                                        3
-                                                    ? 15.h
-                                                    : 27.h,
-                                                width: 100.w,
-                                                padding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 3.h,
-                                                    vertical: 2.h),
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                    backgroundColor,
-                                                    borderRadius:
-                                                    BorderRadius.only(
-                                                        topLeft: Radius
-                                                            .circular(15
-                                                            .px),
-                                                        topRight: Radius
-                                                            .circular(
-                                                            15.px))),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .start,
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    widget.isSelectSignUp ==
-                                                        2 ||
-                                                        widget.isSelectSignUp ==
-                                                            3
-                                                        ? Container()
-                                                        : Row(
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .center,
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          child: getCustomTextW6S20(
-                                                              text: widget.isSelectSignUp == 2 || widget.isSelectSignUp == 3
-                                                                  ? 'Take Selfie'.tr
-                                                                  : 'Take / Upload'.tr,
-                                                              color: accentColor),
-                                                        ),
-                                                        InkWell(
-                                                          onTap:
-                                                              () {
-                                                            Get.back();
-                                                          },
-                                                          child:
-                                                          Icon(
-                                                            Icons
-                                                                .close,
-                                                            color:
-                                                            subTextColor,
-                                                            size:
-                                                            20,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            captureImage();
-                                                            Get.back();
-                                                          },
-                                                          child: fillColorButton(
-                                                              text:
-                                                              'Take Selfie'
-                                                                  .tr,
-                                                              color:
-                                                              pinkAppColor),
-                                                        ),
-                                                        getVerSpace(
-                                                            1.4.h),
-                                                        widget.isSelectSignUp ==
-                                                            2 ||
-                                                            widget.isSelectSignUp ==
-                                                                3
-                                                            ? Container()
-                                                            : GestureDetector(
-                                                            onTap:
-                                                                () {
-                                                              pickImage();
-                                                              Get.back();
-                                                            },
-                                                            child: outlineButton(
-                                                                text: 'Upload from Gallery'
-                                                                    .tr,
-                                                                color:
-                                                                backgroundColor,
-                                                                borderColor:
-                                                                pinkAppColor)),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                        child: outlineButton(
-                                            text: widget.isSelectSignUp ==
-                                                2 ||
-                                                widget.isSelectSignUp ==
-                                                    3
-                                                ? 'Take Selfie'.tr
-                                                : 'Take / Upload'.tr,
-                                            borderColor: subTextColor,
-                                            color: backgroundColor),
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                            : Expanded(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 50.h,
-                                  margin:
-                                  EdgeInsets.symmetric(vertical: 3.h),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: FileImage(takePhoto!),
-                                          fit: BoxFit.contain)),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet<void>(
-                                    context: context,
-                                    elevation: 5,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        height: widget.isSelectSignUp ==
-                                            2 ||
-                                            widget.isSelectSignUp == 3
-                                            ? 15.h
-                                            : 27.h,
-                                        width: 100.w,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 3.h,
-                                            vertical: 2.h),
-                                        decoration: BoxDecoration(
-                                            color: backgroundColor,
-                                            borderRadius:
-                                            BorderRadius.only(
-                                                topLeft:
-                                                Radius.circular(
-                                                    15.px),
-                                                topRight:
-                                                Radius.circular(
-                                                    15.px))),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
-                                          children: [
-                                            widget.isSelectSignUp == 2 ||
-                                                widget.isSelectSignUp ==
-                                                    3
-                                                ? Container()
-                                                : Row(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .center,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: getCustomTextW6S20(
-                                                      text: widget.isSelectSignUp == 2 ||
+                                height: 45.h,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        getSvgImage('back_logo.svg',
+                                            height: 25.h),
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 9.h),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                showModalBottomSheet<void>(
+                                                  context: context,
+                                                  elevation: 5,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Container(
+                                                      height: widget.isSelectSignUp ==
+                                                                  2 ||
+                                                              widget.isSelectSignUp ==
+                                                                  3
+                                                          ? 15.h
+                                                          : 27.h,
+                                                      width: 100.w,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 3.h,
+                                                              vertical: 2.h),
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              backgroundColor,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(15
+                                                                          .px),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          15.px))),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          widget.isSelectSignUp ==
+                                                                      2 ||
+                                                                  widget.isSelectSignUp ==
+                                                                      3
+                                                              ? Container()
+                                                              : Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child: getCustomTextW6S20(
+                                                                          text: widget.isSelectSignUp == 2 || widget.isSelectSignUp == 3
+                                                                              ? 'Take Selfie'.tr
+                                                                              : 'Take / Upload'.tr,
+                                                                          color: accentColor),
+                                                                    ),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Get.back();
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .close,
+                                                                        color:
+                                                                            subTextColor,
+                                                                        size:
+                                                                            20,
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                          Column(
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  captureImage();
+                                                                  Get.back();
+                                                                },
+                                                                child: fillColorButton(
+                                                                    text:
+                                                                        'Take Selfie'
+                                                                            .tr,
+                                                                    color:
+                                                                        pinkAppColor),
+                                                              ),
+                                                              getVerSpace(
+                                                                  1.4.h),
+                                                              widget.isSelectSignUp ==
+                                                                          2 ||
+                                                                      widget.isSelectSignUp ==
+                                                                          3
+                                                                  ? Container()
+                                                                  : GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        pickImage();
+                                                                        Get.back();
+                                                                      },
+                                                                      child: outlineButton(
+                                                                          text: 'Upload from Gallery'
+                                                                              .tr,
+                                                                          color:
+                                                                              backgroundColor,
+                                                                          borderColor:
+                                                                              pinkAppColor)),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: outlineButton(
+                                                  text: widget.isSelectSignUp ==
+                                                              2 ||
                                                           widget.isSelectSignUp ==
                                                               3
-                                                          ? 'Take Selfie'
-                                                          .tr
-                                                          : 'Take / Upload'
-                                                          .tr,
-                                                      color:
-                                                      accentColor),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    Get.back();
-                                                  },
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    color:
-                                                    subTextColor,
-                                                    size: 20,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    captureImage();
-                                                    Get.back();
-                                                  },
-                                                  child: fillColorButton(
-                                                      text: 'Take Selfie'
-                                                          .tr,
-                                                      color:
-                                                      pinkAppColor),
-                                                ),
-                                                getVerSpace(1.4.h),
-                                                widget.isSelectSignUp == 2 ||
-                                                    widget.isSelectSignUp ==
-                                                        3
-                                                    ? Container()
-                                                    : GestureDetector(
-                                                    onTap: () {
-                                                      pickImage();
-                                                      Get.back();
-                                                    },
-                                                    child: outlineButton(
-                                                        text:
-                                                        'Upload from Gallery'
-                                                            .tr,
-                                                        color:
-                                                        backgroundColor,
-                                                        borderColor:
-                                                        pinkAppColor)),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: outlineButton(
-                                    text: widget.isSelectSignUp == 2 ||
-                                        widget.isSelectSignUp == 3
-                                        ? 'Take Selfie'.tr
-                                        : 'Take / Upload'.tr,
-                                    borderColor: subTextColor,
-                                    color: backgroundColor),
+                                                      ? 'Take Selfie'.tr
+                                                      : 'Take / Upload'.tr,
+                                                  borderColor: subTextColor,
+                                                  color: backgroundColor),
+                                            )),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Expanded(
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: 50.h,
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 3.h),
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: FileImage(takePhoto!),
+                                                fit: BoxFit.contain)),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet<void>(
+                                          context: context,
+                                          elevation: 5,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              height: widget.isSelectSignUp ==
+                                                          2 ||
+                                                      widget.isSelectSignUp == 3
+                                                  ? 15.h
+                                                  : 27.h,
+                                              width: 100.w,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 3.h,
+                                                  vertical: 2.h),
+                                              decoration: BoxDecoration(
+                                                  color: backgroundColor,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  15.px),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  15.px))),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  widget.isSelectSignUp == 2 ||
+                                                          widget.isSelectSignUp ==
+                                                              3
+                                                      ? Container()
+                                                      : Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                              child: getCustomTextW6S20(
+                                                                  text: widget.isSelectSignUp == 2 ||
+                                                                          widget.isSelectSignUp ==
+                                                                              3
+                                                                      ? 'Take Selfie'
+                                                                          .tr
+                                                                      : 'Take / Upload'
+                                                                          .tr,
+                                                                  color:
+                                                                      accentColor),
+                                                            ),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Get.back();
+                                                              },
+                                                              child: Icon(
+                                                                Icons.close,
+                                                                color:
+                                                                    subTextColor,
+                                                                size: 20,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                  Column(
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          captureImage();
+                                                          Get.back();
+                                                        },
+                                                        child: fillColorButton(
+                                                            text: 'Take Selfie'
+                                                                .tr,
+                                                            color:
+                                                                pinkAppColor),
+                                                      ),
+                                                      getVerSpace(1.4.h),
+                                                      widget.isSelectSignUp == 2 ||
+                                                              widget.isSelectSignUp ==
+                                                                  3
+                                                          ? Container()
+                                                          : GestureDetector(
+                                                              onTap: () {
+                                                                pickImage();
+                                                                Get.back();
+                                                              },
+                                                              child: outlineButton(
+                                                                  text:
+                                                                      'Upload from Gallery'
+                                                                          .tr,
+                                                                  color:
+                                                                      backgroundColor,
+                                                                  borderColor:
+                                                                      pinkAppColor)),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: outlineButton(
+                                          text: widget.isSelectSignUp == 2 ||
+                                                  widget.isSelectSignUp == 3
+                                              ? 'Take Selfie'.tr
+                                              : 'Take / Upload'.tr,
+                                          borderColor: subTextColor,
+                                          color: backgroundColor),
+                                    ),
+                                    getVerSpace(1.h),
+                                  ],
+                                ),
                               ),
-                              getVerSpace(1.h),
-                            ],
-                          ),
-                        ),
-
                         GestureDetector(
                           onTap: () async {
                             if (takePhoto == null) {
                               Fluttertoast.showToast(
                                   msg: widget.isSelectSignUp == 2 ||
-                                      widget.isSelectSignUp == 3
+                                          widget.isSelectSignUp == 3
                                       ? 'Take Selfie'.tr
                                       : 'Take / Upload'.tr,
                                   toastLength: Toast.LENGTH_SHORT,
@@ -541,12 +542,10 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
                           child: _isLoading
                               ? const CircularProgressIndicator()
                               : fillColorButton(
-                            color: pinkAppColor,
-                            text: 'Next'.tr,
-                          ),
+                                  color: pinkAppColor,
+                                  text: 'Next'.tr,
+                                ),
                         )
-
-
                       ],
                     ),
                   ),
